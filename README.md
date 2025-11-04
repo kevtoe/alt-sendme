@@ -44,6 +44,10 @@ The easiest way to get started is by downloading one of the following versions f
     <td><b>Linux (AppImage)</b></td>
     <td><a href='https://github.com/tonyantony300/alt-sendme/releases/download/v0.1.3/AltSendme_0.1.3_amd64_linux.AppImage'>AltSendme.AppImage</a></td>
   </tr>
+  <tr>
+    <td><b>Docker (Linux)</b></td>
+    <td><code>docker pull ghcr.io/tonyantony300/alt-sendme:latest</code></td>
+  </tr>
 </table>
 
 
@@ -51,6 +55,34 @@ The easiest way to get started is by downloading one of the following versions f
 
 
 More download options in [GitHub Releases](https://github.com/tonyantony300/alt-sendme/releases).
+
+### Docker Installation
+
+AltSendme is also available as a Docker image for Linux users. The easiest way to run it:
+
+```bash
+# Using docker-compose (recommended)
+xhost +local:docker
+docker-compose up
+xhost -local:docker
+```
+
+Or using docker run:
+
+```bash
+# Pull and run manually
+docker pull ghcr.io/tonyantony300/alt-sendme:latest
+xhost +local:docker
+docker run --rm -it \
+  --network host \
+  -e DISPLAY=$DISPLAY \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  ghcr.io/tonyantony300/alt-sendme:latest
+xhost -local:docker
+```
+
+For more Docker usage details and troubleshooting, see [DOCKER.md](DOCKER.md).
+
 
 
 
@@ -62,7 +94,9 @@ More download options in [GitHub Releases](https://github.com/tonyantony300/alt-
 - **Cross-Platform**: Native desktop application for Windows, macOS, and Linux
 - **Modern UI**: React-based interface built with modern web technologies
 - **Secure**: 256-bit node IDs with TLS encryption
-- **CLI Compatible**: Works seamlessly with the [sendme](https://www.iroh.computer/sendme) CLI tool 
+- **CLI Compatible**: Works seamlessly with the [sendme](https://www.iroh.computer/sendme) CLI tool
+- **Docker Support**: Run via Docker on Linux with X11 forwarding
+ 
 
 
 ### macOS Installation 

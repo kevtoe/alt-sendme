@@ -9,7 +9,6 @@ use commands::{start_sharing, stop_sharing, receive_file, get_sharing_status, ch
 use state::AppState;
 use std::sync::Arc;
 use std::fs;
-use tauri::Manager;
 
 /// Clean up any orphaned .sendme-* directories from previous runs
 /// Scans both current_dir and temp_dir to handle transition and legacy directories
@@ -49,7 +48,6 @@ fn cleanup_orphaned_directories() {
     tracing::info!("🧹 Orphan cleanup complete");
 }
 
-
 fn main() {
     // Initialize tracing for better debugging
     tracing_subscriber::fmt()
@@ -80,7 +78,7 @@ fn main() {
             get_transport_status,
             get_file_size,
         ])
-        .setup(|_app| {
+        .setup(|app| {
             // Clean up any orphaned .sendme-* directories from previous runs
             cleanup_orphaned_directories();
             
@@ -93,7 +91,7 @@ fn main() {
             // Disable window decorations only on Linux
             #[cfg(target_os = "linux")]
             {
-                if let Some(window) = _app.handle().get_webview_window("main") {
+                if let Some(window) = app.handle().get_webview_window("main") {
                     let _ = window.set_decorations(false);
                 }
             }

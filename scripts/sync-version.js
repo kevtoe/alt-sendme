@@ -12,6 +12,7 @@ const tauriPackageJsonPath = path.join(__dirname, '../src-tauri/package.json');
 const webAppPackageJsonPath = path.join(__dirname, '../web-app/package.json');
 const tauriConfigPath = path.join(__dirname, '../src-tauri/tauri.conf.json');
 const cargoTomlPath = path.join(__dirname, '../src-tauri/Cargo.toml');
+const rootCargoTomlPath = path.join(__dirname, '../Cargo.toml');
 const readmePath = path.join(__dirname, '../README.md');
 
 // Read version from source of truth
@@ -37,10 +38,15 @@ tauriConfig.version = version;
 fs.writeFileSync(tauriConfigPath, JSON.stringify(tauriConfig, null, 2) + '\n');
 
 
-// Update Cargo.toml
+// Update src-tauri/Cargo.toml
 let cargoToml = fs.readFileSync(cargoTomlPath, 'utf8');
 cargoToml = cargoToml.replace(/^version = "[\d.]+"/m, `version = "${version}"`);
 fs.writeFileSync(cargoTomlPath, cargoToml);
+
+// Update root Cargo.toml
+let rootCargoToml = fs.readFileSync(rootCargoTomlPath, 'utf8');
+rootCargoToml = rootCargoToml.replace(/^version = "[\d.]+"/m, `version = "${version}"`);
+fs.writeFileSync(rootCargoTomlPath, rootCargoToml);
 
 
 // Update README.md - replace version in download URLs and filenames

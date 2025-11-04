@@ -1,0 +1,43 @@
+# Git
+.git
+.gitignore
+
+# Build artifacts (not needed since we copy pre-built binary)
+target/
+src-tauri/target/
+node_modules/
+web-app/node_modules/
+web-app/dist/
+
+# Source files (not needed for runtime image)
+src/
+src-tauri/src/
+web-app/src/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+
+# CI/CD
+.github/
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+
+# Reference directories
+src-tauri-reference/
+web-app-reference/
