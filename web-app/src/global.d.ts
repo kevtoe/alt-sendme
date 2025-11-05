@@ -3,6 +3,7 @@ declare global {
   const IS_MACOS: boolean;
   const IS_WINDOWS: boolean;
   const IS_LINUX: boolean;
+  const AUTO_UPDATER_DISABLED: boolean;
 }
 
 export {};

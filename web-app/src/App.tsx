@@ -7,6 +7,8 @@ import { VERSION_DISPLAY } from './lib/version'
 import { TranslationProvider } from './i18n'
 import { useTranslation } from './i18n/react-i18next-compat'
 import { LanguageSwitcher } from './components/LanguageSwitcher'
+import { AppUpdater } from './components/AppUpdater'
+import { useAppUpdater } from './hooks/useAppUpdater'
 
 function AppContent() {
   const [activeTab, setActiveTab] = useState<'send' | 'receive'>('send')
@@ -14,10 +16,22 @@ function AppContent() {
   const [isReceiving, setIsReceiving] = useState(false)
   const isInitialRender = useRef(false)
   const { t } = useTranslation()
+  const { checkForUpdate } = useAppUpdater()
 
   useEffect(() => {
       isInitialRender.current = true
   }, [])
+
+  // Check for updates on mount (Windows/Linux only)
+  useEffect(() => {
+    const shouldCheckUpdates = 
+      (typeof AUTO_UPDATER_DISABLED === 'undefined' || !AUTO_UPDATER_DISABLED) &&
+      (typeof IS_MACOS === 'undefined' || !IS_MACOS)
+    
+    if (shouldCheckUpdates) {
+      checkForUpdate()
+    }
+  }, [checkForUpdate])
 
   return (
     <div className="h-screen flex flex-col relative glass-background select-none" style={{ color: 'var(--app-bg-fg)' }}>
@@ -130,6 +144,9 @@ function AppContent() {
           <LanguageSwitcher />
         </div>
       </div>
+      
+      {/* Update notification */}
+      <AppUpdater />
     </div>
   )
 }

@@ -71,6 +71,12 @@ fn main() {
             get_file_size,
         ])
         .setup(|_app| {
+            // Initialize updater plugin for desktop platforms only
+            #[cfg(not(any(target_os = "ios", target_os = "android")))]
+            {
+                _app.handle().plugin(tauri_plugin_updater::Builder::new().build())?;
+            }
+            
             // Clean up any orphaned .sendme-* directories from previous runs
             cleanup_orphaned_directories();
             
